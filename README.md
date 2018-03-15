@@ -1,8 +1,6 @@
-# My Awesome API
+# Corda 中文开发文档
 
-```java
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
-```
+欢迎阅读 Corda 中文开发文档。
 
 
 
