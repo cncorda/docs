@@ -4,6 +4,7 @@
 
 * [My Awesome API](README.md)
 
-## Methods
+## 快速开始
 
-* [Defining Methods](methods.md)
+* [快速开始构建你的 CorDapp](methods.md)
+
