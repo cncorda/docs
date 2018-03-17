@@ -1,0 +1,1 @@
+[快速开始构建你的 CorDapp](getting-set-up.md)
