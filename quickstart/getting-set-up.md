@@ -28,7 +28,7 @@ Corda 使用的是行业标准的工具：
 3. 选择 “Accept License Agreement”
 4. 点击 jdk-8uXXX-windows-x64.exe 的下载链接（XXX 表示最新的版本号）
 5. 下载并运行Java 的安装文件（使用默认设置）
-6. 打开一个新的命令窗口然后运行 `java -version` 来测试一下 Java 是否正确安装了
+6. 打开一个新的命令窗口然后运行 {% em color="#ff0000" %}highlighted !{% endem %} `java -version` 来测试一下 Java 是否正确安装了
 
 ```java
 val timeWindow: TimeWindow? = tx.timeWindow
