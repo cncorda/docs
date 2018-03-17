@@ -30,6 +30,52 @@ Corda 使用的是行业标准的工具：
 5. 下载并运行Java 的安装文件（使用默认设置）
 6. 打开一个新的命令窗口然后运行 `java -version` 来测试一下 Java 是否正确安装了
 
+```java
+val timeWindow: TimeWindow? = tx.timeWindow
+
+for ((inputs, outputs, _) in groups) {
+    when (command.value) {
+        is Commands.Move -> {
+            val input = inputs.single()
+            requireThat {
+                "the transaction is signed by the owner of the CP" using (input.owner.owningKey in command.signers)
+                "the state is propagated" using (outputs.size == 1)
+                // Don't need to check anything else, as if outputs.size == 1 then the output is equal to
+                // the input ignoring the owner field due to the grouping.
+            }
+        }
+
+        is Commands.Redeem -> {
+            // Redemption of the paper requires movement of on-ledger cash.
+            val input = inputs.single()
+            val received = tx.outputs.map { it.data }.sumCashBy(input.owner)
+            val time = timeWindow?.fromTime ?: throw IllegalArgumentException("Redemptions must be timestamped")
+            requireThat {
+                "the paper must have matured" using (time >= input.maturityDate)
+                "the received amount equals the face value" using (received == input.faceValue)
+                "the paper must be destroyed" using outputs.isEmpty()
+                "the transaction is signed by the owner of the CP" using (input.owner.owningKey in command.signers)
+            }
+        }
+
+        is Commands.Issue -> {
+            val output = outputs.single()
+            val time = timeWindow?.untilTime ?: throw IllegalArgumentException("Issuances must be timestamped")
+            requireThat {
+                // Don't allow people to issue commercial paper under other entities identities.
+                "output states are issued by a command signer" using (output.issuance.party.owningKey in command.signers)
+                "output values sum to more than the inputs" using (output.faceValue.quantity > 0)
+                "the maturity date is not in the past" using (time < output.maturityDate)
+                // Don't allow an existing CP state to be replaced by this issuance.
+                "can't reissue an existing state" using inputs.isEmpty()
+            }
+        }
+
+        else -> throw IllegalArgumentException("Unrecognised command")
+    }
+}
+```
+
 ### Git
 
 1. 访问 [https://git-scm.com/download/win](https://git-scm.com/download/win)
