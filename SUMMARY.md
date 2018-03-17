@@ -2,8 +2,6 @@
 
 [欢迎阅读 Corda 中文开发文档](README.md)
 
----
-
 ## 快速开始
 
 * [快速开始构建你的 CorDapp](quickstart/getting-set-up.md)
