@@ -1,5 +1,3 @@
-# Summary
-
 [欢迎阅读 Corda 中文开发文档](README.md)
 
 ---
