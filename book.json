@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api"],
+    "plugins": [ "theme-api", "emphasize"],
     "pluginsConfig": {
         "theme-api": {
             "split": true,
